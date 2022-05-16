@@ -99,7 +99,8 @@ namespace Emby.Plugins.JavScraper.Scrapers
         {
             if (doc == null)
                 return ls;
-            var nodes = doc.DocumentNode.SelectNodes("//*[@id='videos']/div/div/a");
+            //var nodes = doc.DocumentNode.SelectNodes("//*[@id='videos']/div/div/a");
+            var nodes = doc.DocumentNode.SelectNodes("//*[@class='item']/a");
             if (nodes?.Any() != true)
                 return ls;
 
@@ -122,7 +123,8 @@ namespace Emby.Plugins.JavScraper.Scrapers
                         m.Cover = $"https:{m.Cover}";
                 }
 
-                m.Num = node.SelectSingleNode("./div[@class='uid']")?.InnerText.Trim();
+                //m.Num = node.SelectSingleNode("./div[@class='uid']")?.InnerText.Trim();
+                m.Num = node.SelectSingleNode("./div/strong")?.InnerText.Trim();
                 if (string.IsNullOrEmpty(m.Num)) 
                     m.Num = node.SelectSingleNode("./div[@class='uid2']")?.InnerText.Trim();
                 m.Title = node.SelectSingleNode("./div[@class='video-title']")?.InnerText.Trim();
